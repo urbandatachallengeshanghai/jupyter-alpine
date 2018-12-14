@@ -142,7 +142,6 @@ RUN \
   patch -p0 < /root/.patches/ipykernel_displayhook && \
   patch -p0 < /root/.patches/websocket_keepalive
 
-
 ########################################################################
 # Add dynamic kernels
 ########################################################################
@@ -164,6 +163,14 @@ RUN \
   python3 -m bash_kernel.install && \
   clean-pyc-files /usr/lib/python3*
 
+########################################################################
+# Add postgresql support
+########################################################################
+
+RUN \
+ apk add --no-cache python3 postgresql-libs && \
+ apk add --no-cache --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
+RUN pip3 install psycopg2-binary
 
 ########################################################################
 # Metadata
